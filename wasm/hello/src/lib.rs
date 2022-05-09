@@ -1,5 +1,6 @@
 extern crate wasm_bindgen;
 extern crate web_sys;
+include!("rules.rs");
 
 use wasm_bindgen::prelude::*;
 
