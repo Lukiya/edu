@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <title>Olliix Test</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <script>
+        async function fetchAndInstantiate(url) {
+            const response = await fetch(url);
+            const bytes = await response.arrayBuffer();
+            const imports = {};
+            const result = await WebAssembly.instantiate(bytes, imports);
+            return result.instance.exports;
+        }
+    </script>
+</head>
+
+<body style="margin-top: 50px;">
+    <input id="num" type="number" value="1" />
+    <button onclick="test()">Test</button>
+    <br />
+    <label id="rs"></label>
+
+    <script>
+        const test = function () {
+            const a = document.getElementById("num").value;
+            const b = parseInt(a);
+            const c = wasm.is_odd(b);
+
+            document.getElementById("rs").innerHTML = c == 1;
+        };
+        let wasm;
+        (async function () {
+            wasm = await fetchAndInstantiate('js/hello_bg.wasm');
+
+
+        })();
+    </script>
+</body>
+
+</html>
